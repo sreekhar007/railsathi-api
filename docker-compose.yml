@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: railsathi_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      MAIL_USERNAME: your_email@gmail.com
+      MAIL_PASSWORD: your_email_password
+      MAIL_FROM: your_email@gmail.com
+      postgres_host: db
+      postgres_user: postgres
+      postgres_password: postgres
+      postgres_db: railsathi
+
+  db:
+    image: postgres:13
+    container_name: railsathi_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: railsathi
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
